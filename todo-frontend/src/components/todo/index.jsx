@@ -64,6 +64,7 @@ function Todo() {
 
   const deleteTodo = async (id) => {
     try {
+      console.log(id);
       const response = await axios.delete(`http://localhost:8000/todos/${id}`);
       if (response.status === 200) {
         const updatedTodos = todos.filter(todo => todo._id !== id);
