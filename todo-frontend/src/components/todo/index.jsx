@@ -14,7 +14,7 @@ function Todo() {
 
   const fetchData = async () => {
     try {
-      const response = await axios.get('http://localhost:8001/todos');
+      const response = await axios.get('https://simple-mern-todo.onrender.com/todos');
       setTodos(response.data);
     } catch (error) {
       toast.error("Failed to fetch todos");
@@ -32,7 +32,7 @@ function Todo() {
       return;
     }
     try {
-      const response = await axios.post('http://localhost:8001/todos', {
+      const response = await axios.post('https://simple-mern-todo.onrender.com/todos', {
         title: inputTitle,
         description: inputDescription,
         completed: false
@@ -48,7 +48,7 @@ function Todo() {
 
   const updateTodo = async (id, title, description, completed) => {
     try {
-      const response = await axios.put(`http://localhost:8001/todos/${id}`, { title, description, completed });
+      const response = await axios.put(`https://simple-mern-todo.onrender.com/todos/${id}`, { title, description, completed });
       const updatedTodos = todos.map(todo => {
         if (todo._id === id) {
           return { ...todo, title, description, completed: response.data.completed };
@@ -65,7 +65,7 @@ function Todo() {
   const deleteTodo = async (id) => {
     try {
       console.log(id);
-      const response = await axios.delete(`http://localhost:8001/todos/${id}`);
+      const response = await axios.delete(`https://simple-mern-todo.onrender.com/todos/${id}`);
       if (response.status === 200) {
         const updatedTodos = todos.filter(todo => todo._id !== id);
         const deletedTodo = todos.find(todo => todo._id === id);
