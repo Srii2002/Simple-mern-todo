@@ -1,7 +1,6 @@
-// todoControllers.js
-
 const Todo = require('../models/dbTodos');
 
+// Get all todos
 const getTodos = async (req, res) => {
     try {
         const todos = await Todo.find();
@@ -14,7 +13,7 @@ const getTodos = async (req, res) => {
 const createTodo = async (req, res) => {
     const todo = new Todo({
         title: req.body.title,
-        description: req.body.description,
+        description: req.body.description || '',
         completed: req.body.completed || false
     });
 
@@ -46,7 +45,7 @@ const updateTodo = async (req, res) => {
 const deleteTodo = async (req, res) => {
     try {
         await Todo.findByIdAndDelete(req.params.id);
-        res.json({ message: 'Todo deleted successfully' });
+        res.status(200).json({ message: 'Todo deleted successfully' });
     } catch (error) {
         res.status(500).json({ message: error.message });
     }

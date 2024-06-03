@@ -1,7 +1,4 @@
-// todoRoutes.js
-
 const express = require('express');
-const router = express.Router();
 const {
   getTodos,
   createTodo,
@@ -9,9 +6,11 @@ const {
   deleteTodo
 } = require('../controllers/todoControllers');
 
-router.get('/', getTodos);
-router.post('/', createTodo);
-router.put('/:id', updateTodo);
-router.delete('/:id', deleteTodo);
+const router = express.Router();
+
+router.get('/todos', getTodos);
+router.post('/todos', createTodo);
+router.put('/todos/:id', updateTodo);
+router.delete('/todos/:id', deleteTodo);
 
 module.exports = router;
