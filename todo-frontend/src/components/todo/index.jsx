@@ -1,5 +1,7 @@
 import React, { useEffect, useState } from 'react';
-import { Container, Section, Button, TodoSection, Title, TodoContainer, FormContainer, TextArea, Input, AddButton } from './styles';
+import {
+  Container, Section, Button, TodoSection, Title, TodoContainer, FormContainer, TextArea, Input, AddButton
+} from './styles';
 import axios from 'axios';
 import TodoList from '../../components/TodoList';
 import { ToastContainer, toast } from 'react-toastify';
@@ -48,7 +50,11 @@ function Todo() {
 
   const updateTodo = async (id, title, description, completed) => {
     try {
-      const response = await axios.put(`https://simple-mern-todo.onrender.com/todos/${id}`, { title, description, completed });
+      const response = await axios.put(`https://simple-mern-todo.onrender.com/todos/${id}`, {
+        title,
+        description,
+        completed
+      });
       const updatedTodos = todos.map(todo => {
         if (todo._id === id) {
           return { ...todo, title, description, completed: response.data.completed };
@@ -64,13 +70,12 @@ function Todo() {
 
   const deleteTodo = async (id) => {
     try {
-      console.log(id);
       const response = await axios.delete(`https://simple-mern-todo.onrender.com/todos/${id}`);
       if (response.status === 200) {
         const updatedTodos = todos.filter(todo => todo._id !== id);
         const deletedTodo = todos.find(todo => todo._id === id);
         setTodos(updatedTodos);
-        setDeletedTodos([...deletedTodos, deletedTodo]);
+        setDeletedTodos(deletedTodos.filter(todo => todo._id !== id)); // Remove deleted todo from deletedTodos
         toast.success("Todo deleted successfully");
       } else {
         toast.error("Failed to delete todo");
@@ -79,16 +84,14 @@ function Todo() {
       toast.error("Failed to delete todo");
     }
   };
-
   const renderSection = () => {
     if (activeSection === 'uncompleted') {
       return <TodoList todos={todos.filter(todo => !todo.completed)} updateTodo={updateTodo} deleteTodo={deleteTodo} />;
     } else if (activeSection === 'completed') {
       return <TodoList todos={todos.filter(todo => todo.completed)} updateTodo={updateTodo} deleteTodo={deleteTodo} />;
-    } else if (activeSection === 'deleted') {
-      return <TodoList todos={deletedTodos} updateTodo={() => {}} deleteTodo={deleteTodo} />;
     }
   };
+  
 
   return (
     <Container>
@@ -111,7 +114,6 @@ function Todo() {
       <Section>
         <Button onClick={() => setActiveSection('uncompleted')}>Uncompleted Tasks</Button>
         <Button onClick={() => setActiveSection('completed')}>Completed Tasks</Button>
-        <Button onClick={() => setActiveSection('deleted')}>Deleted Tasks</Button>
       </Section>
       <TodoContainer>
         {renderSection()}

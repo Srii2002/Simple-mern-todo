@@ -4,7 +4,7 @@ export const Container = styled.div`
   max-width: 1000px;
   margin: 0 auto;
   padding: 20px;
-  background: linear-gradient(135deg, #f6d365 0%, #fda085 100%);
+  background: linear-gradient(135deg, #ffbf00 0%, #ff7e5f 100%); /* Updated background gradient */
   border-radius: 10px;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
   color: #333;
@@ -60,6 +60,8 @@ export const TodoContainer = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
+  width: 100%; /* Set width to 100% */
+  height: 100%; /* Set height to 100% */
 `;
 
 export const FormContainer = styled.form`
